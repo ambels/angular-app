@@ -1,0 +1,34 @@
+$primary-color: #d8292f;
+$secondary-color: #005078;
+
+section {
+    h1 {
+        color: #005078;
+        mat-spinner {
+            display: inline-block;
+            margin-left: 10px;
+            top: 2px;
+        }
+    }
+    .table-container {
+        overflow-x: auto;
+        .mat-mdc-table {
+            .mat-mdc-header-row {
+                background-color: $primary-color;
+            }
+            .mat-mdc-header-cell {
+                color: #FFF;
+            }
+            .details-btn {
+                background-color: $secondary-color;
+                color: #FFF;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 10px;
+            }
+        }
+        .mat-mdc-paginator {
+            margin-bottom: 50px;
+        }
+    }
+}
