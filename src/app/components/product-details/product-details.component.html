@@ -1,0 +1,20 @@
+<mat-card class="detail-card" *ngIf="product">
+    <mat-card-header>
+        <mat-card-title [innerHTML]="product.blend_name"></mat-card-title>
+        <mat-card-subtitle [innerHTML]="product.origin"></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            <b>Variety: </b>
+            <span>{{ product.variety }}</span>
+        </p>
+        <p>
+            <b>Notes: </b>
+            <span>{{ product.notes }}</span>
+        </p>
+        <p>
+            <b>Intensifier: </b>
+            <span>{{ product.intensifier }}</span>
+        </p>
+    </mat-card-content>
+</mat-card>

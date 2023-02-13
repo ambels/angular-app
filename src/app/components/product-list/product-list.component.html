@@ -1,0 +1,60 @@
+<section>
+    <h1>
+        <span>Our products</span>
+        <mat-spinner [diameter]="20" *ngIf="!isDataLoaded"></mat-spinner>
+    </h1>
+    
+    <div class="mat-elevation-z1 table-container">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by identifier">ID</th>
+                <td mat-cell *matCellDef="let product">{{ product.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="blend_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">Name</th>
+                <td mat-cell *matCellDef="let product">{{ product.blend_name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="origin">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by origin">Origin</th>
+                <td mat-cell *matCellDef="let product">{{ product.origin }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="variety">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by variety">Variety</th>
+                <td mat-cell *matCellDef="let product">{{ product.variety }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="notes">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by notes">Notes</th>
+                <td mat-cell *matCellDef="let product">{{ product.notes }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="intensifier">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by intensifier">Intensifier</th>
+                <td mat-cell *matCellDef="let product">{{ product.intensifier }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="link">
+                <th mat-header-cell *matHeaderCellDef>View product</th>
+                <td mat-cell *matCellDef="let product">
+                    <a [title]="product.blend_name + ' details'" [routerLink]="['/products', product.id]" ariaCurrentWhenActive="page" class="details-btn">
+                        Details
+                    </a>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+
+        <mat-paginator
+            [length]="length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            showFirstLastButtons
+            aria-label="Product list">
+        </mat-paginator>
+    </div>
+</section>
