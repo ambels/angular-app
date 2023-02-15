@@ -39,9 +39,9 @@
             <ng-container matColumnDef="link">
                 <th mat-header-cell *matHeaderCellDef>View product</th>
                 <td mat-cell *matCellDef="let product">
-                    <a [title]="product.blend_name + ' details'" [routerLink]="['/products', product.id]" ariaCurrentWhenActive="page" class="details-btn">
+                    <button [title]="product.blend_name + ' details'" ariaCurrentWhenActive="page" class="details-btn">
                         Details
-                    </a>
+                    </button>
                 </td>
             </ng-container>
 

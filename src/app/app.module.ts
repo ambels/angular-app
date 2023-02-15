@@ -14,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { productReducer } from './ngrx/reducers/product.reducer';
+import { productsReducer, selectedProductReducer } from './ngrx/reducers/product.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './ngrx/effects/product.effects';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
@@ -36,7 +36,7 @@ import { FooterComponent } from './components/footer/footer.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ products: productReducer }, {}),
+    StoreModule.forRoot({ products: productsReducer, selectedProduct: selectedProductReducer }, {}),
     EffectsModule.forRoot([ProductEffects]),
     MatSlideToggleModule,
     MatTableModule,

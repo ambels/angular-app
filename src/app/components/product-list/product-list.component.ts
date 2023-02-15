@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { ProductFeatureState } from 'src/app/ngrx/AppState';
 import { Observable } from 'rxjs';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 
-import { getProducts } from '../../ngrx/actions/product.actions';
+import { getProducts, setSelectedProduct } from '../../ngrx/actions/product.actions';
 import { Product } from 'src/app/interfaces/Product';
+import { selectProducts } from 'src/app/ngrx/selectors/product.selectors';
 
 @Component({
   selector: 'app-product-list',
@@ -17,7 +19,7 @@ import { Product } from 'src/app/interfaces/Product';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductListComponent {
-  products$: Observable<Product[]> = this.store.select((state) => state.products);
+  products$: Observable<ProductFeatureState> = this.store.select(selectProducts);
   length: number = 50;
   pageSize: number = 10;
   pageSizeOptions: number[] = [5, 10, 30, 50];
@@ -26,7 +28,7 @@ export class ProductListComponent {
   isDataLoaded = false;
 
   constructor(
-    private store: Store<{ products: Product[] }>,
+    private store: Store<ProductFeatureState>,
     private router: Router
   ) { }
 
@@ -36,10 +38,9 @@ export class ProductListComponent {
 
   ngOnInit() {
     this.store.dispatch(getProducts());
-    this.products$.subscribe((data: any) => {
-      this.dataSource.data = data.products;
-      sessionStorage.setItem('products', JSON.stringify(data.products));
-      this.isDataLoaded = data.loaded;
+    this.products$.subscribe(({ products, loaded }) => {
+      this.dataSource.data = products;
+      this.isDataLoaded = loaded;
     });
   }
 
@@ -49,6 +50,7 @@ export class ProductListComponent {
   }
 
   goToDetailsPage(product: Product) {
+    this.store.dispatch(setSelectedProduct({ product }))
     this.router.navigate(['/products', product.id]);
   }
 }
