@@ -19,6 +19,12 @@ section {
             .mat-mdc-header-cell {
                 color: #FFF;
             }
+            .mat-mdc-row {
+                cursor: pointer;
+            }
+            .mat-mdc-row:hover {
+                background-color: whitesmoke;
+            }
             .details-btn {
                 background-color: $secondary-color;
                 color: #FFF;
@@ -30,5 +36,16 @@ section {
         .mat-mdc-paginator {
             margin-bottom: 50px;
         }
+    }
+}
+
+@media only screen and (max-width: 825px) {
+    .mat-column-variety, .mat-column-notes, .mat-column-intensifier {
+        display: none;
+    }
+}
+@media only screen and (max-width: 426px) {
+    .mat-column-link {
+        display: none;
     }
 }

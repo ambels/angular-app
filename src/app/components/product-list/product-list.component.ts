@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -24,7 +25,10 @@ export class ProductListComponent {
   dataSource: any = new MatTableDataSource();
   isDataLoaded = false;
 
-  constructor(private store: Store<{ products: Product[] }>) { }
+  constructor(
+    private store: Store<{ products: Product[] }>,
+    private router: Router
+  ) { }
 
   @ViewChild(MatTable) table!: MatTable<any>;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -42,5 +46,9 @@ export class ProductListComponent {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  goToDetailsPage(product: Product) {
+    this.router.navigate(['/products', product.id]);
   }
 }
