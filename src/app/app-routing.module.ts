@@ -5,7 +5,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', title: 'Coffee Shop - Shop Coffee Online', component: ProductListComponent },
   { path: 'products/:productId', component: ProductDetailsComponent },
   { path: '**', component: PageNotFoundComponent },

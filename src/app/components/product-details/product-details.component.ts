@@ -30,8 +30,12 @@ export class ProductDetailsComponent {
 
     this.title.setTitle(`${this.product?.blend_name}'s details - Coffee Shop`);
 
-    if (Object.keys(this.product).length === 0) {
-      this.router.navigate(['**']);
+    if (typeof this.product !== 'undefined' && Object.keys(this.product).length === 0) {
+      this.goTo404Page();
     }
+  }
+
+  goTo404Page() {
+    this.router.navigate(['**']);
   }
 }
