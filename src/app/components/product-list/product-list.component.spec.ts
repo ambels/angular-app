@@ -60,6 +60,17 @@ describe('ProductListComponent', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/products', 147]);
   });
 
+  it('should navigate to /products/147 after clicking on the product table row', () => {
+    const navigateSpy = spyOn(router, 'navigate');
+    component.products$ = of(mockProductsSlice);
+    component.ngOnInit();
+    fixture.detectChanges();
+    const compiled =  fixture.debugElement.nativeElement;
+    const tableRow = compiled.querySelector('table tbody .mat-mdc-row');
+    tableRow.click();
+    expect(navigateSpy).toHaveBeenCalledWith(['/products', 147]);
+  });
+
   it('#isDataLoaded should be', () => {
     expect(component.isDataLoaded)
       .withContext('false at first')
