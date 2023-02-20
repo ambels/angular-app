@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideStore, StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
 import { routes } from 'src/app/app-routing.module';
 
 import { ProductDetailsComponent } from './product-details.component';
@@ -38,7 +39,8 @@ describe('ProductDetailsComponent', () => {
 
   it('should navigate to 404 page not found', () => {
     const navigateSpy = spyOn(router, 'navigate');
-    component.goTo404Page();
+    component.product$ = of({});
+    component.ngOnInit()
     expect(navigateSpy).toHaveBeenCalledWith(['**']);
   });
 });

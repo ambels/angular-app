@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductFeatureState } from 'src/app/ngrx/AppState';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -20,6 +20,7 @@ import { selectProducts } from 'src/app/ngrx/selectors/product.selectors';
 })
 export class ProductListComponent {
   products$: Observable<ProductFeatureState> = this.store.select(selectProducts);
+  productsSubscription!: Subscription;
   length: number = 50;
   pageSize: number = 10;
   pageSizeOptions: number[] = [5, 10, 30, 50];
@@ -37,11 +38,18 @@ export class ProductListComponent {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   ngOnInit() {
-    this.store.dispatch(getProducts());
-    this.products$.subscribe(({ products, loaded }) => {
-      this.dataSource.data = products;
-      this.isDataLoaded = loaded;
+    this.productsSubscription = this.products$.subscribe((data) => {
+      if (!data.loaded) {
+        this.store.dispatch(getProducts());
+      } else {
+        this.dataSource.data = data.products;
+        this.isDataLoaded = data.loaded;
+      }
     });
+  }
+
+  ngOnDestroy() {
+    this.productsSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {

@@ -1,7 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 import * as actions from '../actions/product.actions';
 
-const initialState: any = {};
+const initialState: any = {
+    products: [],
+    loaded: false,
+};
+
+const InitialProductState: any = {};
 
 // handles the products state slice
 export const productsReducer = createReducer(
@@ -12,6 +17,6 @@ export const productsReducer = createReducer(
 
 // handles the selected product state slice
 export const selectedProductReducer = createReducer(
-    initialState,
+    InitialProductState,
     on(actions.setSelectedProduct, (state, props) => props.product),
 );

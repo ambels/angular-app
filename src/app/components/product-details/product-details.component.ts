@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Product } from 'src/app/interfaces/Product';
 import { selectedProduct } from 'src/app/ngrx/selectors/product.selectors';
@@ -15,6 +15,7 @@ import { selectedProduct } from 'src/app/ngrx/selectors/product.selectors';
 })
 export class ProductDetailsComponent {
   product$: Observable<Product> = this.store.select(selectedProduct);
+  productSubscription!: Subscription;
   product!: Product;
 
   constructor(
@@ -24,15 +25,18 @@ export class ProductDetailsComponent {
   ) { }
 
   ngOnInit() {
-    this.product$.subscribe((product: Product) => {
+    this.productSubscription = this.product$.subscribe((product: Product) => {
       this.product = product;
     });
 
-    this.title.setTitle(`${this.product?.blend_name}'s details - Coffee Shop`);
-
-    if (typeof this.product !== 'undefined' && Object.keys(this.product).length === 0) {
+    if (this.product && Object.keys(this.product).length === 0) {
       this.goTo404Page();
     }
+    this.title.setTitle(`${this.product?.blend_name}'s details - Coffee Shop`);
+  }
+
+  ngOnDestroy() {
+    this.productSubscription.unsubscribe();
   }
 
   goTo404Page() {
